@@ -1,0 +1,22 @@
+Package: sub.dongle
+Type: Package
+Title: A dongle to perform sub-group analyses.
+Version: 0.0.9000
+Author: Trinh Dong <trinhdhk@outlook.com.vn>
+Maintainer: Trinh Dong <trinhdhk@outlook.com.vn>
+Description: Misc functions to perform sub-group analyses. Part of dongles.
+License: GPL3
+Encoding: UTF-8
+LazyData: true
+Imports:
+  rlang,
+  dplyr,
+  ggplot2,
+  cli,
+  tidymodels,
+  future.apply,
+  progressr,
+  forestploter
+Depends:
+  R (>= 4.1.0)
+RoxygenNote: 7.3.2
