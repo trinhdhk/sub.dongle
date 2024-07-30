@@ -20,7 +20,7 @@ forestploter <- function(x, ...){
 #' @rdname forestploter
 #' @export
 forestploter.default <- function(x, stats_cols, ci_column, ...) {
-  call <- match.call(orestploter::forest)
+  call <- match.call(forestploter::forest)
   call[[1]] <- quote()
   x <- x |> dplyr::mutate(dplyr::across(!ci_column,
                 ~ ifelse(is.na(.x)|.x=='NA','',.x)))
