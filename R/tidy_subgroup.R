@@ -80,6 +80,7 @@ tidy_subgroup <- function(
 ._tidy_subgroup_ <- function(base_model, grp, data, conf.int, ...){
   group_var <- names(grp)
   group_lv <- grp[[1]]
+  group_var_name <- if (!is.null(attr(group_var, 'label'))) attr(group_var, 'label') else group_var
   group_fit <- lapply(
     group_lv,
     \(lv) {
@@ -89,8 +90,8 @@ tidy_subgroup <- function(
         dplyr::mutate(.subgroup_val = lv)
     }) |>
     dplyr::bind_rows() |>
-    dplyr::mutate(.subgroup_name = group_var,
-                  .subgroup_label = paste(group_var, .subgroup_val, sep= ' = ')) |>
+    dplyr::mutate(.subgroup_name = group_var_name ,
+                  .subgroup_label = paste(group_var_name, .subgroup_val, sep= ' = ')) |>
     dplyr::select(.subgroup_label, .subgroup_name, .subgroup_val, dplyr::everything())
 }
 
