@@ -51,7 +51,7 @@ tidy_subgroup <- function(
             ._tidy_subgroup_(base_model, group[i], data, ...)
           }, future.seed = TRUE)}, handlers = progressr::handler_cli())
     }
-    subgroup_fit <- lapply(seq_along(group), \(i) ._tidy_subgroup_(base_model, group[i], data, ...))
+    subgroup_fit <- lapply(seq_along(group), \(i) ._tidy_subgroup_(base_model, group[i], data, conf.int = conf.int ...))
     subgroup_fit <- dplyr::bind_rows(subgroup_fit)
     if (.overall) return(._append_class_(dplyr::bind_rows(overall_fit, subgroup_fit), 'tidy_subgroup_tbl'))
     ._append_class_(subgroup_fit, 'tidy_subgroup_tbl')
@@ -77,7 +77,7 @@ tidy_subgroup <- function(
   group_val
 }
 
-._tidy_subgroup_ <- function(base_model, grp, data, ...){
+._tidy_subgroup_ <- function(base_model, grp, data, conf.int, ...){
   group_var <- names(grp)
   group_lv <- grp[[1]]
   group_fit <- lapply(
@@ -85,7 +85,7 @@ tidy_subgroup <- function(
     \(lv) {
       subdat <- dplyr::filter(data, .data[[group_var]] == lv)
       subfit <- update(base_model, data=subdat)
-      tidy(subfit, ...) |>
+      tidy(subfit, conf.int = conf.int, ...) |>
         dplyr::mutate(.subgroup_val = lv)
     }) |>
     dplyr::bind_rows() |>
