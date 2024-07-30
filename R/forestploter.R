@@ -128,7 +128,7 @@ as_forest_dt.tidy_subgroup_tbl <- function(x,
          estimate,
          std.error, conf.low, conf.high,
          names(stats)[(plot_pos-1):length(stats)],
-         everything())
+         dplyr::everything())
   for (i in seq_along(plot_width)){
     dt <- dplyr::mutate(dt, "{strrep(' ', 2+i)}" := strrep(" ", 30 * plot_width[i]))
     dt <- dplyr::relocate(dt, strrep(' ', 2+i) , .before = plot_pos[i])
