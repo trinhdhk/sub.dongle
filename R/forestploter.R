@@ -58,7 +58,7 @@ forestploter.tidy_subgroup_tbl <-
                   lower = conf.low,
                   upper = conf.high,
                   sizes = std.error,
-                  ci_column = plot_pos,
+                  ci_column = plot_pos - as.numeric(.hide_label),
                   arrow_lab = arrow_lab,
                   ...
                 ))
