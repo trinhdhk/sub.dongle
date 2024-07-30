@@ -4,41 +4,41 @@
 #' @param x a tibble create by tidy_subgroup
 #' @param terms <character> which term to show forest plot
 #' @param label [\code{"Subgroup"}] A character specifying the label of the subgroup column
-#' @param .after_stats [\code{c('Est (95% CI)' = '{estimate} ({conf.low}, {conf.high})', 'p-value' =  '{format.pval(p.value, digits=2, eps=1e-3)}')}]
+#' @param .right_stats [\code{c('Est (95% CI)' = '{estimate} ({conf.low}, {conf.high})', 'p-value' =  '{format.pval(p.value, digits=2, eps=1e-3)}')}]
 #' stat names in x to be shown in the forest plot after the CI bar
-#' @param .before_stats [\code{NULL}] <NULL|character> stat name in x to forest plot that are shown before the CI
+#' @param .left_stats [\code{NULL}] <NULL|character> stat name in x to forest plot that are shown before the CI
 #' @param ... additional parameters passed to [forestploter::forest()].
 #' @importFrom rlang enquo
 #' @return a plot
 #' @export
-forestplotter <- function(x, ...){
-  UseMethod('forestplotter')
+foresploter <- function(x, ...){
+  UseMethod('foresploter')
 }
 
-#' @rdname forestplotter
+#' @rdname foresploter
 #' @export
-forestplotter.default <- forestploter::forest
+foresploter.default <- forestploter::forest
 
-#' @rdname forestplotter
-#' @method forestplotter tidy_subgroup_tbl
+#' @rdname foresploter
+#' @method foresploter tidy_subgroup_tbl
 #' @export
-forestplotter.tidy_subgroup_tbl <-
+foresploter.tidy_subgroup_tbl <-
   function(x,
            terms = x$term[[2]],
            label ="Subgroup",
-           .after_stats = c('Est. (95% CI)' = '{format.ci(estimate, conf.low, conf.high, digits=1)}',
+           .right_stats = c('Est. (95% CI)' = '{format.ci(estimate, conf.low, conf.high, digits=1)}',
                             'p-value' =  '{format.pval(p.value, digits=2, eps=1e-3)}'),
-           .before_stats = NULL,
+           .left_stats = NULL,
            .show_p.value = TRUE,
            ...){
     ell <- list(...)
-    prepared_dt <- ._prepare_forest_dt_(x, terms, label, .after_stats, .before_stats)
+    prepared_dt <- ._prepare_forest_dt_(x, terms, label, .right_stats, .left_stats)
     plt <- with(prepared_dt,
                 forestploter::forest(
                   data = prepared_dt |>
                     dplyr::select(-estimate, -conf.low, -conf.high, -std.error,
-                           dplyr::any_of(names(.before_stats)),
-                           dplyr::any_of(names(.after_stats))) |>
+                           dplyr::any_of(names(.left_stats)),
+                           dplyr::any_of(names(.right_stats))) |>
                     dplyr::mutate(
                       dplyr::across(dplyr::everything(),
                                     ~ ifelse(is.na(.x)|.x=='NA','',.x))
@@ -53,10 +53,10 @@ forestplotter.tidy_subgroup_tbl <-
   }
 
 
-._prepare_forest_dt_ <- function(x, terms, label, .after_stats, .before_stats){
+._prepare_forest_dt_ <- function(x, terms, label, .right_stats, .left_stats){
   dt <- dplyr::filter(x, term %in% terms)
   # dt$.subgroup <- dt$.subgroup_name
-  all_stats <-  c(.after_stats, .before_stats)
+  all_stats <-  c(.right_stats, .left_stats)
   for (i in seq_along(all_stats)){
     dt[names(all_stats)[[i]]] <- with(dt,glue::glue(all_stats[[i]]))
   }
@@ -78,11 +78,11 @@ forestplotter.tidy_subgroup_tbl <-
     mutate(" " = paste(rep(" ", 30), collapse = " "))
 
   select(dt, "{label}" := .subgroup_val,
-         names(.before_stats),
+         names(.left_stats),
          ` `,
          estimate,
          std.error, conf.low, conf.high,
-         names(.after_stats))
+         names(.right_stats))
 }
 
 format.ci <- function(est, l95, u95, digits=1){

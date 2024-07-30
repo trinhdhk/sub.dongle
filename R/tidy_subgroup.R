@@ -81,7 +81,7 @@ tidy_subgroup <- function(
   group_fit <- lapply(
     group_lv,
     \(lv) {
-      subdat <- dplyr::filter(data, .data[[group_var]] == group_lv)
+      subdat <- dplyr::filter(data, .data[[group_var]] == lv)
       subfit <- update(base_model, data=subdat)
       tidy(subfit, ...) |>
         dplyr::mutate(.subgroup_val = lv)
