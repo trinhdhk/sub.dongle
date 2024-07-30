@@ -95,4 +95,19 @@ tidy_subgroup <- function(
     dplyr::select(.subgroup_label, .subgroup_name, .subgroup_val, dplyr::everything())
 }
 
+#' @rdname tidy_subgroup
+#' @export
+as_tidy_subgroup <- function(x, ...){
+  UseMethod('as_tidy_subgroup')
+}
 
+#' @rdname tidy_subgroup
+#' @method as_tidy_subgroup data.frame
+#' @export
+as_tidy_subgroup.data.frame <- function(x){
+  nolegit <- setdiff(c('.subgroup_val', '.subgroup_name', '.subgroup_label', '.estimate'),
+                     names(x))
+  if (length(nolegit)) cli::cli_abort('x cannot be converted to a tidy_subgroup_tbl.')
+  class(x) <- c('tidy_subgroup_tbl', class(x))
+  x
+}

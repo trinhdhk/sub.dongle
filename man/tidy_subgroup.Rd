@@ -2,6 +2,8 @@
 % Please edit documentation in R/tidy_subgroup.R
 \name{tidy_subgroup}
 \alias{tidy_subgroup}
+\alias{as_tidy_subgroup}
+\alias{as_tidy_subgroup.data.frame}
 \title{Refit model on sub-cohort}
 \usage{
 tidy_subgroup(
@@ -13,6 +15,10 @@ tidy_subgroup(
   .overall = FALSE,
   .progress = FALSE
 )
+
+as_tidy_subgroup(x, ...)
+
+\method{as_tidy_subgroup}{data.frame}(x)
 }
 \arguments{
 \item{base_model}{The main model, will determine that method to use}
