@@ -89,6 +89,7 @@ as_forest_dt.tidy_subgroup_tbl <- function(x,
                                     'p-value' =  format.pval(p.value, digits=2, eps=1e-3)),
                           plot_pos = 2L,
                           plot_width = 1){
+  stats <- rlang::enexpr(stats)
   dt <- dplyr::filter(x, term %in% terms)
   # dt$.subgroup <- dt$.subgroup_name
   # browser()
