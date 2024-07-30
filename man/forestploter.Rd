@@ -4,6 +4,9 @@
 \alias{forestploter}
 \alias{forestploter.default}
 \alias{forestploter.tidy_subgroup_tbl}
+\alias{as_forest_dt}
+\alias{as_forest_dt.defautl}
+\alias{as_forest_dt.tidy_subgroup_tbl}
 \title{Method to create forest plot for \code{tidy_subgroup} tibble}
 \usage{
 forestploter(x, ...)
@@ -47,6 +50,20 @@ forestploter(x, ...)
   .hide_label = FALSE,
   ...
 )
+
+as_forest_dt(x, ...)
+
+\method{as_forest_dt}{defautl}(x, ...)
+
+\method{as_forest_dt}{tidy_subgroup_tbl}(
+  x,
+  terms = x$term[[2]],
+  label = "Subgroup",
+  stats = c(`Est. (95\% CI)` = format.ci(estimate, conf.low, conf.high, digits = 1),
+    `p-value` = format.pval(p.value, digits = 2, eps = 0.001)),
+  plot_pos = 2L,
+  plot_width = 1
+)
 }
 \arguments{
 \item{x}{a tibble create by tidy_subgroup}
@@ -69,6 +86,8 @@ forestploter(x, ...)
 }
 \value{
 a plot
+
+A tibble
 }
 \description{
 This function add a method to create forest plot to tidied subgroup models.

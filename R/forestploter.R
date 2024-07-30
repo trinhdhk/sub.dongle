@@ -43,7 +43,7 @@ forestploter.tidy_subgroup_tbl <-
     if (as.character(stats[[1]]) == 'c') stats <- stats[-1]
     stats <- stats[names(stats) != '']
     ell <- list(...)
-    prepared_dt <- ._prepare_forest_dt_(x, terms, label, stats, plot_pos, plot_width)
+    prepared_dt <- as_forest_dt(x, terms, label, stats, plot_pos, plot_width)
     if (.hide_label) prepared_dt[[label]] <- NULL
     plt <- with(prepared_dt,
                 forestploter::forest(
@@ -66,7 +66,29 @@ forestploter.tidy_subgroup_tbl <-
   }
 
 
-._prepare_forest_dt_ <- function(x, terms, label, stats, plot_pos, plot_width){
+#' @rdname forestploter
+#' @export
+#' @return A tibble
+as_forest_dt <- function(x, ...){
+  UseMethod('as_forest_dt')
+}
+
+#' @rdname forestploter
+#' @export
+as_forest_dt.defautl <- function(x, ...){
+  stop(cli::cli_abort('Not implemented.'))
+}
+
+#' @rdname forestploter
+#' @method as_forest_dt tidy_subgroup_tbl
+#' @export
+as_forest_dt.tidy_subgroup_tbl <- function(x,
+                          terms = x$term[[2]],
+                          label = "Subgroup",
+                          stats = c('Est. (95% CI)' = format.ci(estimate, conf.low, conf.high, digits=1),
+                                    'p-value' =  format.pval(p.value, digits=2, eps=1e-3)),
+                          plot_pos = 2L,
+                          plot_width = 1){
   dt <- dplyr::filter(x, term %in% terms)
   # dt$.subgroup <- dt$.subgroup_name
   # browser()
@@ -89,15 +111,23 @@ forestploter.tidy_subgroup_tbl <-
         dplyr::bind_rows(x1, x)
       }
     ) |>
-    ungroup() |>
-    mutate(" " = paste(rep(" ", 30 * plot_width), collapse = " "))
+    ungroup()
 
-  select(dt, "{label}" := .subgroup_val,
+
+
+  dt <- select(dt, "{label}" := .subgroup_val,
          names(stats)[0:(plot_pos-2)],
-         ` `,
+         # starts_with('  '),
          estimate,
          std.error, conf.low, conf.high,
          names(stats)[(plot_pos-1):length(stats)])
+  for (i in seq_along(plot_width)){
+    dt <- dplyr::mutate(dt, "{strrep(' ', 2+i)}" := strrep(" ", 30 * plot_width[i]))
+    dt <- dplyr::relocate(dt, strrep(' ', 2+i) , .before = plot_pos[i])
+
+  }
+  dt
+
 }
 
 format.ci <- function(est, l95, u95, digits=1){
