@@ -92,7 +92,7 @@ as_forest_dt.tidy_subgroup_tbl <- function(x,
   stats <- rlang::enexpr(stats)
   if (as.character(stats[[1]]) == 'c') stats <- stats[-1]
   stats <- stats[names(stats) != '']
-  ._prepare_forest_dt(x, terms, label, stats, plot_pos, plot_width)
+  ._prepare_forest_dt_(x, terms, label, stats, plot_pos, plot_width)
 }
 
 ._prepare_forest_dt_ <- function(x, terms, label, stats, plot_pos, plot_width){
