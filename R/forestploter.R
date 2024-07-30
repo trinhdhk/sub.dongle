@@ -20,16 +20,17 @@ forestploter <- function(x, ...){
 #' @rdname forestploter
 #' @export
 forestploter.default <- function(x, stats_cols, ci_column, ...) {
-  args <- with(x, list(...))
-  x <- x |> dplyr::mutate(dplyr::across(dplyr::everything(),
+  call <- match.call(orestploter::forest)
+  call[[1]] <- quote()
+  x <- x |> dplyr::mutate(dplyr::across(!ci_column,
                 ~ ifelse(is.na(.x)|.x=='NA','',.x)))
-  args$ci_column <- ci_column
-  args$data <- x |> dplyr::select({{stats_cols}}, dplyr::starts_with('  '))
+  call$ci_column <- ci_column
+  call$data <- x |> dplyr::select({{stats_cols}}, dplyr::starts_with('  '))
   for (i in seq_along(ci_column)){
-    args$data <- dplyr::relocate(args$data, strrep(' ', 2+i), .before=ci_column[i])
+    call$data <- dplyr::relocate(call$data, strrep(' ', 2+i), .before=ci_column[i])
   }
-
-  do.call(forestploter::forest, args)
+  call$stats_col <- NULL
+  with(x, eval(call))
 }
 
 #' @rdname forestploter
