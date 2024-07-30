@@ -19,7 +19,11 @@ forestploter <- function(x, ...){
 
 #' @rdname forestploter
 #' @export
-forestploter.default <- forestploter::forest
+forestploter.default <- function(x,...) {
+  x |> dplyr::across(dplyr::everything(),
+                ~ ifelse(is.na(.x)|.x=='NA','',.x)) |>
+    forestploter::forest(...)
+}
 
 #' @rdname forestploter
 #' @method forestploter tidy_subgroup_tbl
