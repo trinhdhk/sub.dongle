@@ -19,13 +19,12 @@ forestploter <- function(x, ...){
 
 #' @rdname forestploter
 #' @export
-forestploter.default <- function(x, ...) {
+forestploter.default <- function(x, stats_cols, ...) {
   call <- match.call()
   x <- x |> dplyr::mutate(dplyr::across(dplyr::everything(),
                 ~ ifelse(is.na(.x)|.x=='NA','',.x)))
-  call$x <- x
-  call[[1]] <-
-
+  call$data <- x |> dplyr::select({{stats_cols}})
+  call$stats_col <- call$x <- NULL
   with(x, do.call(forestploter::forest, call))
 }
 
