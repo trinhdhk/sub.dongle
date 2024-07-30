@@ -43,7 +43,7 @@ forestploter.tidy_subgroup_tbl <-
     if (as.character(stats[[1]]) == 'c') stats <- stats[-1]
     stats <- stats[names(stats) != '']
     ell <- list(...)
-    prepared_dt <- as_forest_dt(x, terms, label, stats, plot_pos, plot_width)
+    prepared_dt <- ._prepare_forest_dt_(x, terms, label, stats, plot_pos, plot_width)
     if (.hide_label) prepared_dt[[label]] <- NULL
     plt <- with(prepared_dt,
                 forestploter::forest(
@@ -90,6 +90,12 @@ as_forest_dt.tidy_subgroup_tbl <- function(x,
                           plot_pos = 2L,
                           plot_width = 1){
   stats <- rlang::enexpr(stats)
+  if (as.character(stats[[1]]) == 'c') stats <- stats[-1]
+  stats <- stats[names(stats) != '']
+  ._prepare_forest_dt(x, terms, label, stats, plot_pos, plot_width)
+}
+
+._prepare_forest_dt_ <- function(x, terms, label, stats, plot_pos, plot_width){
   dt <- dplyr::filter(x, term %in% terms)
   # dt$.subgroup <- dt$.subgroup_name
   # browser()
