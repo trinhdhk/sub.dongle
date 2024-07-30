@@ -22,10 +22,10 @@ forestploter <- function(x, ...){
 forestploter.default <- function(x, stats_cols, ci_column, ...) {
   call <- match.call()
   call[[1]] <- quote(forestploter::forest)
-  x <- x |> dplyr::mutate(dplyr::across(!ci_column,
+  x2 <- x |> dplyr::mutate(dplyr::across(!ci_column,
                 ~ ifelse(is.na(.x)|.x=='NA','',.x)))
   call$ci_column <- ci_column
-  call$data <- x |> dplyr::select({{stats_cols}}, dplyr::starts_with('  '))
+  call$data <- x2 |> dplyr::select({{stats_cols}}, dplyr::starts_with('  '))
   for (i in seq_along(ci_column)){
     call$data <- dplyr::relocate(call$data, strrep(' ', 2+i), .before=ci_column[i])
   }
