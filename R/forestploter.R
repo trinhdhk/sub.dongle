@@ -19,10 +19,14 @@ forestploter <- function(x, ...){
 
 #' @rdname forestploter
 #' @export
-forestploter.default <- function(x,...) {
-  x |> dplyr::mutate(dplyr::across(dplyr::everything(),
-                ~ ifelse(is.na(.x)|.x=='NA','',.x))) |>
-    forestploter::forest(...)
+forestploter.default <- function(x, ...) {
+  call <- match.call()
+  x <- x |> dplyr::mutate(dplyr::across(dplyr::everything(),
+                ~ ifelse(is.na(.x)|.x=='NA','',.x)))
+  call$x <- x
+  call[[1]] <-
+
+  with(x, do.call(forestploter::forest, call))
 }
 
 #' @rdname forestploter
