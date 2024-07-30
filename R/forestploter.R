@@ -20,7 +20,7 @@ forestploter <- function(x, ...){
 #' @rdname forestploter
 #' @export
 forestploter.default <- function(x, stats_cols, ...) {
-  args <- list(...names())
+  args <- list(...)
   x <- x |> dplyr::mutate(dplyr::across(dplyr::everything(),
                 ~ ifelse(is.na(.x)|.x=='NA','',.x)))
   args$data <- x |> dplyr::select({{stats_cols}})
