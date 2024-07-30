@@ -7,6 +7,7 @@
 #' @param group A vector of grouping variables
 #' @param data Dataset for the performing subgroup. If missing, \code{base_model$data} will be inferred.
 #' If the model object does not contains data, an error will be thrown.
+#' @param conf.int [\code{TRUE}] include confidence interval
 #' @param ... additional parameters passed to the method
 #' @param .overall [\code{FALSE}] Save the overall model in the output?
 #' @param .progress [\code{FALSE}] Print progress?
@@ -20,6 +21,7 @@ tidy_subgroup <- function(
     base_model,
     group,
     data,
+    conf.int = TRUE,
     ...,
     .overall = FALSE,
     .progress = FALSE){
@@ -35,7 +37,7 @@ tidy_subgroup <- function(
       )
     }
     overall_fit <- tidy(base_model, ...) |>
-      dplyr::mutate(.subgroup_name = NA, .subgroup_val = NA, .subgroup_label = 'Overall') |>
+      dplyr::mutate(.subgroup_name = '(All patients)', .subgroup_val = NA, .subgroup_label = '(All patients)') |>
       dplyr::select(.subgroup_label, .subgroup_name, .subgroup_val, dplyr::everything())
 
     group <- enquo(group)

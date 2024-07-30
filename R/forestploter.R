@@ -4,8 +4,7 @@
 #' @param x a tibble create by tidy_subgroup
 #' @param terms <character> which term to show forest plot
 #' @param label [\code{"Subgroup"}] A character specifying the label of the subgroup column
-#' @param stats [\code{c('Est. (95% CI)' = format.ci(estimate, conf.low, conf.high, digits=1), 'p-value' =  format.pval(p.value, digits=2, eps=1e-3))}]
-#' stat names in x to be shown in the forest plot after the CI bar
+#' @param stats stat names in x to be shown in the forest plot after the CI bar
 #' @param plot_pos [\code{2}] <int> column position of plot
 #' @param plot_width [\code{1}] <numeric> adjust plot width by a factor > 0
 #' @param arrow_lab [\code{c('Harmful', 'Benefit')}] label of the arrow
@@ -35,7 +34,9 @@ forestploter.tidy_subgroup_tbl <-
            arrow_lab = c('Harmful', 'Benefit'),
            ...){
     if (plot_width <= 0)
-      stop(cli::cli_abort("plot_width must be strictly positive."))
+      stop(cli::cli_abort("plot_width must be strictly larger than 0."))
+    if (plot_pos <= 1)
+      stop(cli::cli_abort("plot_width must be strictly larger than 1."))
     stats <- rlang::enexpr(stats)
     if (as.character(stats[[1]]) == 'c') stats <- stats[-1]
     stats <- stats[names(stats) != '']
@@ -69,7 +70,9 @@ forestploter.tidy_subgroup_tbl <-
   for (i in seq_along(stats)){
     dt[names(stats)[[i]]] <- with(dt,eval(stats[[i]]))
   }
-  dt <- dplyr::group_by(dt, .subgroup_name) |>
+
+  dt <- dt |>
+    dplyr::group_by(.subgroup_name) |>
     dplyr::group_modify(
       function(x,y){
         if (all(is.na(x$.subgroup_val))) {

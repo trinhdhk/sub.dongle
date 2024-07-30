@@ -42,6 +42,8 @@ forestploter(x, ...)
   stats = c(`Est. (95\% CI)` = format.ci(estimate, conf.low, conf.high, digits = 1),
     `p-value` = format.pval(p.value, digits = 2, eps = 0.001)),
   plot_pos = 2L,
+  plot_width = 1,
+  arrow_lab = c("Harmful", "Benefit"),
   ...
 )
 }
@@ -50,11 +52,17 @@ forestploter(x, ...)
 
 \item{...}{additional parameters passed to [forestploter::forest()].}
 
+\item{arrow_lab}{[\code{c('Harmful', 'Benefit')}] label of the arrow}
+
 \item{terms}{<character> which term to show forest plot}
 
 \item{label}{[\code{"Subgroup"}] A character specifying the label of the subgroup column}
 
+\item{stats}{stat names in x to be shown in the forest plot after the CI bar}
+
 \item{plot_pos}{[\code{2}] <int> column position of plot}
+
+\item{plot_width}{[\code{1}] <numeric> adjust plot width by a factor > 0}
 }
 \value{
 a plot

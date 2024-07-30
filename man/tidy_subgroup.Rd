@@ -8,6 +8,7 @@ tidy_subgroup(
   base_model,
   group,
   data,
+  conf.int = TRUE,
   ...,
   .overall = FALSE,
   .progress = FALSE
@@ -20,6 +21,8 @@ tidy_subgroup(
 
 \item{data}{Dataset for the performing subgroup. If missing, \code{base_model$data} will be inferred.
 If the model object does not contains data, an error will be thrown.}
+
+\item{conf.int}{[\code{TRUE}] include confidence interval}
 
 \item{...}{additional parameters passed to the method}
 
