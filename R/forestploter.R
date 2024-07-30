@@ -29,6 +29,7 @@ forestploter.default <- function(x, stats_cols, ci_column, ...) {
   for (i in seq_along(ci_column)){
     call$data <- dplyr::relocate(call$data, strrep(' ', 2+i), .before=ci_column[i])
   }
+  call$x <- NULL
   call$stats_col <- NULL
   with(x, eval(call))
 }
