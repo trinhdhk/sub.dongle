@@ -9,6 +9,7 @@
 #' @param plot_width [\code{1}] <numeric> adjust plot width by a factor > 0
 #' @param arrow_lab [\code{c('Harmful', 'Benefit')}] label of the arrow
 #' @param ... additional parameters passed to [forestploter::forest()].
+#' @param .hide_label [\code{FALSE}] hide subgroup column.
 #' @importFrom rlang enquo
 #' @return a plot
 #' @export
@@ -32,6 +33,7 @@ forestploter.tidy_subgroup_tbl <-
            plot_pos = 2L,
            plot_width = 1,
            arrow_lab = c('Harmful', 'Benefit'),
+           .hide_label = FALSE,
            ...){
     if (plot_width <= 0)
       stop(cli::cli_abort("plot_width must be strictly larger than 0."))
@@ -42,6 +44,7 @@ forestploter.tidy_subgroup_tbl <-
     stats <- stats[names(stats) != '']
     ell <- list(...)
     prepared_dt <- ._prepare_forest_dt_(x, terms, label, stats, plot_pos, plot_width)
+    if (.hide_label) prepared_dt[[label]] <- NULL
     plt <- with(prepared_dt,
                 forestploter::forest(
                   data = prepared_dt |>

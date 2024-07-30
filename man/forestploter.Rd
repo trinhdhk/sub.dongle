@@ -44,6 +44,7 @@ forestploter(x, ...)
   plot_pos = 2L,
   plot_width = 1,
   arrow_lab = c("Harmful", "Benefit"),
+  .hide_label = FALSE,
   ...
 )
 }
@@ -63,6 +64,8 @@ forestploter(x, ...)
 \item{plot_pos}{[\code{2}] <int> column position of plot}
 
 \item{plot_width}{[\code{1}] <numeric> adjust plot width by a factor > 0}
+
+\item{.hide_label}{[\code{FALSE}] hide subgroup column.}
 }
 \value{
 a plot
