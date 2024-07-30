@@ -13,7 +13,7 @@ Imports:
   dplyr,
   ggplot2,
   cli,
-  tidymodels,
+  broom,
   future.apply,
   progressr,
   forestploter
