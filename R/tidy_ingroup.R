@@ -93,7 +93,7 @@ tidy_ingroup <- function(
                            function(ia.var) ia.var[ia.var != group_var])))
 
     group_var_name <- if (!is.null(attr(data[[group_var]], 'label'))) attr(data[[group_var]], 'label') else group_var
-    data[[group_var]] <- factor(data[[group_var]])
+    data[[group_var]] <- factor(data[[group_var]], ordered = FALSE)
     group_fit <- lapply(
       group_lv,
       \(lv) {
