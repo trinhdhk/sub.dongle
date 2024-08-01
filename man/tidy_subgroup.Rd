@@ -21,7 +21,7 @@ as_tidy_subgroup(x, ...)
 \method{as_tidy_subgroup}{data.frame}(x)
 }
 \arguments{
-\item{base_model}{The main model, will determine that method to use}
+\item{base_model}{The main model, will determine what method to use}
 
 \item{group}{A vector of grouping variables}
 
@@ -37,7 +37,7 @@ If the model object does not contains data, an error will be thrown.}
 \item{.progress}{[\code{FALSE}] Print progress?}
 }
 \value{
-a tibble
+a tibble of class tidy_subgroup_tbl
 }
 \description{
 This function refits the model on sub-cohort, then tidy it.
@@ -46,7 +46,7 @@ This function refits the model on sub-cohort, then tidy it.
 This function relies on \code{tidy} methods. Therefore, as long as there is a suitable method for tidying the fit, this function should work.
 }
 \seealso{
-[generics::tidy()] [future::future()] [future.apply::future_lapply()]
+[generics::tidy()] [future::future()] [future.apply::future_lapply()] [tidy_ingroup()]
 }
 \author{
 Trinh Dong

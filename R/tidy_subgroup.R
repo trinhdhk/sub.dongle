@@ -3,7 +3,7 @@
 #' @details
 #' This function relies on \code{tidy} methods. Therefore, as long as there is a suitable method for tidying the fit, this function should work.
 #' @author Trinh Dong
-#' @param base_model The main model, will determine that method to use
+#' @param base_model The main model, will determine what method to use
 #' @param group A vector of grouping variables
 #' @param data Dataset for the performing subgroup. If missing, \code{base_model$data} will be inferred.
 #' If the model object does not contains data, an error will be thrown.
@@ -11,11 +11,11 @@
 #' @param ... additional parameters passed to the method
 #' @param .overall [\code{FALSE}] Save the overall model in the output?
 #' @param .progress [\code{FALSE}] Print progress?
-#' @return a tibble
+#' @return a tibble of class tidy_subgroup_tbl
 #' @importFrom rlang enquo
 #' @importFrom generics tidy
 #' @importFrom dplyr bind_rows
-#' @seealso [generics::tidy()] [future::future()] [future.apply::future_lapply()]
+#' @seealso [generics::tidy()] [future::future()] [future.apply::future_lapply()] [tidy_ingroup()]
 #' @export
 tidy_subgroup <- function(
     base_model,
@@ -26,13 +26,14 @@ tidy_subgroup <- function(
     .overall = FALSE,
     .progress = FALSE){
     if (missing(data)) {
-      data <- base_model$data
+      data <- model.frame(base_model)
     }
     if (is.null(data)) {
       cli::cli_abort(
         c(
           'Failed to infer dataset from the model. The model may not have saved the data.',
-          i = 'Specified data in the argument.'
+          i = 'When `data` is missing, function infers data from model.frame().
+        You can specify data in the argument.'
         )
       )
     }
@@ -42,16 +43,16 @@ tidy_subgroup <- function(
 
     group <- enquo(group)
     group <- ._get_group_(group, data)
-    if (.progress){
-      progressr::with_progress({
-        pr <- progressr::progressor(along = group)
-        subgroup_fit <- future.apply::future_lapply(
-          seq_along(group), \(i) {
-            pr(message = glue::glue('Fitting {names(group[i])}'))
-            ._tidy_subgroup_(base_model, group[i], data, ...)
-          }, future.seed = TRUE)}, handlers = progressr::handler_cli())
-    }
-    subgroup_fit <- lapply(seq_along(group), \(i) ._tidy_subgroup_(base_model, group[i], data, conf.int = conf.int, ...))
+    progress_handler <- if (isFALSE(.progress)) progressr::handler_void() else
+      if (isTRUE(.progress)) progressr::handler_cli() else .progress
+    progressr::with_progress({
+      pr <- progressr::progressor(along = group)
+      subgroup_fit <- future.apply::future_lapply(
+        seq_along(group), \(i) {
+          pr(message = glue::glue('Fitting {names(group[i])}'))
+          ._tidy_subgroup_(base_model, group[i], data, conf.int = conf.int, ...)
+        }, future.seed = TRUE)}, handlers = progress_handler)
+
     subgroup_fit <- dplyr::bind_rows(subgroup_fit)
     if (.overall) return(._append_class_(dplyr::bind_rows(overall_fit, subgroup_fit), 'tidy_subgroup_tbl'))
     ._append_class_(subgroup_fit, 'tidy_subgroup_tbl')

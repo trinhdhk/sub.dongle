@@ -53,7 +53,7 @@ forestploter.tidy_subgroup_tbl <-
     if (plot_pos <= 1)
       stop(cli::cli_abort("plot_width must be strictly larger than 1."))
     stats <- rlang::enexpr(stats)
-    if (as.character(stats[[1]]) == 'c') stats <- stats[-1]
+    if (is.call(stats) && as.character(stats[[1]]) == 'c') stats <- stats[-1]
     stats <- stats[names(stats) != '']
     ell <- list(...)
     prepared_dt <- ._prepare_forest_dt_(x, terms, label, stats, plot_pos, plot_width)

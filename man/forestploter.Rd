@@ -11,32 +11,7 @@
 \usage{
 forestploter(x, ...)
 
-\method{forestploter}{default}(
-  data,
-  est,
-  lower,
-  upper,
-  sizes = 0.4,
-  ref_line = ifelse(x_trans \%in\% c("log", "log2", "log10"), 1, 0),
-  vert_line = NULL,
-  ci_column,
-  is_summary = NULL,
-  xlim = NULL,
-  ticks_at = NULL,
-  ticks_digits = NULL,
-  ticks_minor = NULL,
-  arrow_lab = NULL,
-  x_trans = "none",
-  xlab = NULL,
-  footnote = NULL,
-  title = NULL,
-  nudge_y = 0,
-  fn_ci = makeci,
-  fn_summary = make_summary,
-  index_args = NULL,
-  theme = NULL,
-  ...
-)
+\method{forestploter}{default}(x, stats_cols, ci_column, ...)
 
 \method{forestploter}{tidy_subgroup_tbl}(
   x,
@@ -70,8 +45,6 @@ as_forest_dt(x, ...)
 
 \item{...}{additional parameters passed to [forestploter::forest()].}
 
-\item{arrow_lab}{[\code{c('Harmful', 'Benefit')}] label of the arrow}
-
 \item{terms}{<character> which term to show forest plot}
 
 \item{label}{[\code{"Subgroup"}] A character specifying the label of the subgroup column}
@@ -81,6 +54,8 @@ as_forest_dt(x, ...)
 \item{plot_pos}{[\code{2}] <int> column position of plot}
 
 \item{plot_width}{[\code{1}] <numeric> adjust plot width by a factor > 0}
+
+\item{arrow_lab}{[\code{c('Harmful', 'Benefit')}] label of the arrow}
 
 \item{.hide_label}{[\code{FALSE}] hide subgroup column.}
 }
