@@ -58,11 +58,14 @@ forestploter.tidy_subgroup_tbl <-
     ell <- list(...)
     prepared_dt <- ._prepare_forest_dt_(x, terms, label, stats, plot_pos, plot_width)
     if (.hide_label) prepared_dt[[label]] <- NULL
+    not_stats <- names(prepared_dt)[!(names(prepared_dt) %in% c(label, names(stats)) |
+                                      grepl('^\\s{2}', names(prepared_dt)))]
     plt <- with(prepared_dt,
                 forestploter::forest(
                   data = prepared_dt |>
-                    dplyr::select(-estimate, -conf.low, -conf.high, -std.error,
-                           dplyr::any_of(names(stats))) |>
+                    dplyr::select(!dplyr::any_of(not_stats)) |>
+                    # dplyr::select(-estimate, -conf.low, -conf.high, -std.error,
+                                   # !dplyr::starts_with('.subgroup')) |>
                     dplyr::mutate(
                       dplyr::across(dplyr::everything(),
                                     ~ ifelse(is.na(.x)|.x=='NA','',.x))
@@ -131,11 +134,11 @@ as_forest_dt.tidy_subgroup_tbl <- function(x,
         dplyr::bind_rows(x1, x)
       }
     ) |>
-    ungroup()
+    dplyr::ungroup()
 
 
 
-  dt <- select(dt, "{label}" := .subgroup_val,
+  dt <- dplyr::select(dt, "{label}" := .subgroup_val,
          names(stats)[0:(plot_pos-2)],
          # starts_with('  '),
          estimate,
