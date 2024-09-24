@@ -91,7 +91,7 @@ as_forest_dt <- function(x, ...){
 
 #' @rdname forestploter
 #' @export
-as_forest_dt.defautl <- function(x, ...){
+as_forest_dt.default <- function(x, ...){
   stop(cli::cli_abort('Not implemented.'))
 }
 
