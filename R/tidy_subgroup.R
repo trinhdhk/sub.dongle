@@ -37,7 +37,7 @@ tidy_subgroup <- function(
         )
       )
     }
-    overall_fit <- tidy(base_model, ...) |>
+    overall_fit <- tidy(base_model, conf.int = conf.int, ...) |>
       dplyr::mutate(.subgroup_name = '(All patients)', .subgroup_val = NA, .subgroup_label = '(All patients)') |>
       dplyr::select(.subgroup_label, .subgroup_name, .subgroup_val, dplyr::everything())
 

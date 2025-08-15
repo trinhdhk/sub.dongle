@@ -154,6 +154,12 @@ as_forest_dt.tidy_subgroup_tbl <- function(x,
 
 }
 
-format.ci <- function(est, l95, u95, digits=1){
-  sprintf(glue::glue('%.{digits}f (%.{digits}f, %.{digits}f)'), est, l95, u95)
+#' Small helper for formatting confidence interval
+#' @description This is a small helper to format the CI in foresplot
+#' @param est point estimate
+#' @param lower,upper the lower and upper bound of CI
+#' @param digits number of digits
+#' @export
+format.ci <- function(est, lower, upper, digits=1){
+  sprintf(glue::glue('%.{digits}f (%.{digits}f, %.{digits}f)'), est, lower, upper)
 }

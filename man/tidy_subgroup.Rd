@@ -28,13 +28,13 @@ as_tidy_subgroup(x, ...)
 \item{data}{Dataset for the performing subgroup. If missing, \code{base_model$data} will be inferred.
 If the model object does not contains data, an error will be thrown.}
 
-\item{conf.int}{[\code{TRUE}] include confidence interval}
+\item{conf.int}{\link{\code{TRUE}} include confidence interval}
 
 \item{...}{additional parameters passed to the method}
 
-\item{.overall}{[\code{FALSE}] Save the overall model in the output?}
+\item{.overall}{\link{\code{FALSE}} Save the overall model in the output?}
 
-\item{.progress}{[\code{FALSE}] Print progress?}
+\item{.progress}{\link{\code{FALSE}} Print progress?}
 }
 \value{
 a tibble of class tidy_subgroup_tbl
@@ -46,7 +46,7 @@ This function refits the model on sub-cohort, then tidy it.
 This function relies on \code{tidy} methods. Therefore, as long as there is a suitable method for tidying the fit, this function should work.
 }
 \seealso{
-[generics::tidy()] [future::future()] [future.apply::future_lapply()] [tidy_ingroup()]
+\code{\link[generics:tidy]{generics::tidy()}} \code{\link[future:future]{future::future()}} \code{\link[future.apply:future_lapply]{future.apply::future_lapply()}} \code{\link[=tidy_ingroup]{tidy_ingroup()}}
 }
 \author{
 Trinh Dong

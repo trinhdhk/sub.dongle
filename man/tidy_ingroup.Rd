@@ -14,11 +14,11 @@ tidy_ingroup(model, group, data, conf.int = TRUE, ..., .progress = FALSE)
 \item{data}{Dataset for the performing subgroup. If missing, \code{base_model$data} will be inferred.
 If the model object does not contains data, an error will be thrown.}
 
-\item{conf.int}{[\code{TRUE}] include confidence interval}
+\item{conf.int}{\link{\code{TRUE}} include confidence interval}
 
 \item{...}{additional parameters passed to the method}
 
-\item{.progress}{[\code{FALSE}] Print progress?}
+\item{.progress}{\link{\code{FALSE}} Print progress?}
 }
 \value{
 a tibble of class tidy_subgroup_tbl
@@ -33,7 +33,7 @@ hence does not assume interaction between group variable and all other covariabl
 If one covariable does not have interaction with the group variable, the estimated effect would be unchanged.
 }
 \seealso{
-[generics::tidy()] [future::future()] [future.apply::future_lapply()] [tidy_ingroup()]
+\code{\link[generics:tidy]{generics::tidy()}} \code{\link[future:future]{future::future()}} \code{\link[future.apply:future_lapply]{future.apply::future_lapply()}} \code{\link[=tidy_ingroup]{tidy_ingroup()}}
 }
 \author{
 Trinh Dong

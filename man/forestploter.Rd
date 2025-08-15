@@ -5,7 +5,7 @@
 \alias{forestploter.default}
 \alias{forestploter.tidy_subgroup_tbl}
 \alias{as_forest_dt}
-\alias{as_forest_dt.defautl}
+\alias{as_forest_dt.default}
 \alias{as_forest_dt.tidy_subgroup_tbl}
 \title{Method to create forest plot for \code{tidy_subgroup} tibble}
 \usage{
@@ -28,7 +28,7 @@ forestploter(x, ...)
 
 as_forest_dt(x, ...)
 
-\method{as_forest_dt}{defautl}(x, ...)
+\method{as_forest_dt}{default}(x, ...)
 
 \method{as_forest_dt}{tidy_subgroup_tbl}(
   x,
@@ -43,21 +43,21 @@ as_forest_dt(x, ...)
 \arguments{
 \item{x}{a tibble create by tidy_subgroup}
 
-\item{...}{additional parameters passed to [forestploter::forest()].}
+\item{...}{additional parameters passed to \code{\link[forestploter:forest]{forestploter::forest()}}.}
 
-\item{terms}{<character> which term to show forest plot}
+\item{terms}{\if{html}{\out{<character>}} which term to show forest plot}
 
-\item{label}{[\code{"Subgroup"}] A character specifying the label of the subgroup column}
+\item{label}{\link{\code{"Subgroup"}} A character specifying the label of the subgroup column}
 
 \item{stats}{stat names in x to be shown in the forest plot after the CI bar}
 
-\item{plot_pos}{[\code{2}] <int> column position of plot}
+\item{plot_pos}{\link{\code{2}} \if{html}{\out{<int>}} column position of plot}
 
-\item{plot_width}{[\code{1}] <numeric> adjust plot width by a factor > 0}
+\item{plot_width}{\link{\code{1}} \if{html}{\out{<numeric>}} adjust plot width by a factor > 0}
 
-\item{arrow_lab}{[\code{c('Harmful', 'Benefit')}] label of the arrow}
+\item{arrow_lab}{\link{\code{c('Harmful', 'Benefit')}} label of the arrow}
 
-\item{.hide_label}{[\code{FALSE}] hide subgroup column.}
+\item{.hide_label}{\link{\code{FALSE}} hide subgroup column.}
 }
 \value{
 a plot
