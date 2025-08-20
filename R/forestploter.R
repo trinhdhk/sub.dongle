@@ -3,13 +3,13 @@
 #' @author Trinh Dong
 #' @param x a tibble create by tidy_subgroup
 #' @param terms <character> which term to show forest plot
-#' @param label [\code{"Subgroup"}] A character specifying the label of the subgroup column
+#' @param label \code{"Subgroup"} A character specifying the label of the subgroup column
 #' @param stats stat names in x to be shown in the forest plot after the CI bar
-#' @param plot_pos [\code{2}] <int> column position of plot
-#' @param plot_width [\code{1}] <numeric> adjust plot width by a factor > 0
-#' @param arrow_lab [\code{c('Harmful', 'Benefit')}] label of the arrow
+#' @param plot_pos \code{2} <int> column position of plot
+#' @param plot_width \code{1} <numeric> adjust plot width by a factor > 0
+#' @param arrow_lab \code{c('Harmful', 'Benefit')} label of the arrow
 #' @param ... additional parameters passed to [forestploter::forest()].
-#' @param .hide_label [\code{FALSE}] hide subgroup column.
+#' @param .hide_label \code{FALSE} hide subgroup column.
 #' @importFrom rlang enquo
 #' @return a plot
 #' @export

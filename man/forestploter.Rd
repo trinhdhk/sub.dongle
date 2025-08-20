@@ -47,17 +47,17 @@ as_forest_dt(x, ...)
 
 \item{terms}{\if{html}{\out{<character>}} which term to show forest plot}
 
-\item{label}{\link{\code{"Subgroup"}} A character specifying the label of the subgroup column}
+\item{label}{\code{"Subgroup"} A character specifying the label of the subgroup column}
 
 \item{stats}{stat names in x to be shown in the forest plot after the CI bar}
 
-\item{plot_pos}{\link{\code{2}} \if{html}{\out{<int>}} column position of plot}
+\item{plot_pos}{\code{2} \if{html}{\out{<int>}} column position of plot}
 
-\item{plot_width}{\link{\code{1}} \if{html}{\out{<numeric>}} adjust plot width by a factor > 0}
+\item{plot_width}{\code{1} \if{html}{\out{<numeric>}} adjust plot width by a factor > 0}
 
-\item{arrow_lab}{\link{\code{c('Harmful', 'Benefit')}} label of the arrow}
+\item{arrow_lab}{\code{c('Harmful', 'Benefit')} label of the arrow}
 
-\item{.hide_label}{\link{\code{FALSE}} hide subgroup column.}
+\item{.hide_label}{\code{FALSE} hide subgroup column.}
 }
 \value{
 a plot

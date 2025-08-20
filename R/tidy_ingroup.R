@@ -8,7 +8,7 @@
 #' @author Trinh Dong
 #' @param model The template model, will determine what method to use
 #' @param group A vector of grouping variables
-#' @param data Dataset for the performing subgroup. If missing, \code{base_model$data} will be inferred.
+#' @param data Dataset for the performing subgroup. If missing, \code{model.frame(model)} will be inferred.
 #' If the model object does not contains data, an error will be thrown.
 #' @param conf.int [\code{TRUE}] include confidence interval
 #' @param ... additional parameters passed to the method

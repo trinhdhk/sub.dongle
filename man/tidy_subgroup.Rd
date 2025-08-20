@@ -25,7 +25,7 @@ as_tidy_subgroup(x, ...)
 
 \item{group}{A vector of grouping variables}
 
-\item{data}{Dataset for the performing subgroup. If missing, \code{base_model$data} will be inferred.
+\item{data}{Dataset for the performing subgroup. If missing, \code{model.frame(base_model)} will be inferred.
 If the model object does not contains data, an error will be thrown.}
 
 \item{conf.int}{\link{\code{TRUE}} include confidence interval}
