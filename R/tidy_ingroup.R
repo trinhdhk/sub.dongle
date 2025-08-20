@@ -1,7 +1,8 @@
 #' Within-group effect by rebasing the group variable
+#' @aliases tidy_ingroup
 #' @description
 #' This function rebase the group variable to different levels and refit the model, then tidy it.
-#' The aim is to get the heterogenous effect of other variables that have interaction with the group variable.
+#' The aim is to get the heterogeneous effect of other variables that have interaction with the group variable.
 #' @details Different from \code{tidy_subgroup}, this function does not fit on the subcohort,
 #' hence does not assume interaction between group variable and all other covariables in the model.
 #' If one covariable does not have interaction with the group variable, the estimated effect would be unchanged.
@@ -10,15 +11,15 @@
 #' @param group A vector of grouping variables
 #' @param data Dataset for the performing subgroup. If missing, \code{model.frame(model)} will be inferred.
 #' If the model object does not contains data, an error will be thrown.
-#' @param conf.int [\code{TRUE}] include confidence interval
+#' @param conf.int \[\code{TRUE}\] include confidence interval
 #' @param ... additional parameters passed to the method
-#' @param .progress [\code{FALSE}] Print progress?
+#' @param .progress \[\code{FALSE}\] Print progress?
 #' @return a tibble of class tidy_subgroup_tbl
-#' @seealso [generics::tidy()] [future::future()] [future.apply::future_lapply()] [tidy_ingroup()]
+#' @seealso [generics::tidy()] [future::future()] [future.apply::future_lapply()] [tidy_subgroup()]
 #'
 #' @export
 
-tidy_ingroup <- function(
+tidy_withingroup <- tidy_ingroup <- function(
     model,
     group,
     data,

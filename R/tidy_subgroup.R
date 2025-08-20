@@ -7,15 +7,15 @@
 #' @param group A vector of grouping variables
 #' @param data Dataset for the performing subgroup. If missing, \code{model.frame(base_model)} will be inferred.
 #' If the model object does not contains data, an error will be thrown.
-#' @param conf.int [\code{TRUE}] include confidence interval
+#' @param conf.int \[\code{TRUE}\] include confidence interval
 #' @param ... additional parameters passed to the method
-#' @param .overall [\code{FALSE}] Save the overall model in the output?
-#' @param .progress [\code{FALSE}] Print progress?
+#' @param .overall \[\code{FALSE}\] Save the overall model in the output?
+#' @param .progress \[\code{FALSE}\] Print progress?
 #' @return a tibble of class tidy_subgroup_tbl
 #' @importFrom rlang enquo
 #' @importFrom generics tidy
 #' @importFrom dplyr bind_rows
-#' @seealso [generics::tidy()] [future::future()] [future.apply::future_lapply()] [tidy_ingroup()]
+#' @seealso [generics::tidy()] [future::future()] [future.apply::future_lapply()] [tidy_withingroup()]
 #' @export
 tidy_subgroup <- function(
     base_model,
